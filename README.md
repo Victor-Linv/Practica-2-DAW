@@ -61,3 +61,54 @@ Vamos a ejecutar el script desde la terminal de Ubuntu con permisos de administr
 "sudo bash scripts/install_lamp.sh"
 
 Una vez realizada la instalación, comprobaremos el estado de los servicios para verificar que el servidor dispone de los componentes necesarios para ejecutar la aplicación.
+
+
+## 4. Configuración de Apache
+
+La configuración principal es la siguiente:
+
+```apache
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/html
+
+    DirectoryIndex index.php index.html
+
+    <Directory "/var/www/html">
+        AllowOverride All
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+De esta forma, Apache puede servir los archivos PHP de la aplicación desde su directorio web.
+
+## 5. Configuración de la base de datos
+
+La aplicación utiliza una base de datos MySQL llamada "lamp_db" y un usuario específico llamado "lamp_user".
+
+El archivo "db/database.sql" contiene las instrucciones SQL necesarias para crear la tabla "users".
+
+Esta tabla almacena los siguientes campos:
+
+## 6. Configuración de la aplicación PHP
+
+Vmaos a configurar los valores necesarios para que la aplicación utilice la base de datos "lamp_db" y el usuario "lamp_user".
+
+La conexión se realiza mediante la extensión "mysql" de PHP.
+
+De esta manera, los distintos archivos PHP de la aplicación pueden acceder a la base de datos para consultar, añadir, modificar y eliminar registros.
+
+## 7. Automatización del despliegue
+
+Para automatizar el despliegue vamos a crear el script "scripts/deploy.sh".
+
+Este script utiliza las variables definidas en ".env" y realiza las operaciones necesarias para preparar la aplicación en el servidor web.
+
+
+Para ejecutar el despliegue utilizaremos el siguiente comando desde el directorio raíz del proyecto:
+
+bash
+bash scripts/deploy.sh
